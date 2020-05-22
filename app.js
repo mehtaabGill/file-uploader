@@ -10,7 +10,9 @@ const ACCEPTED_FILE_MIME_TYPE = 'text/javascript';
 const PORT = 3000;
 
 app.use(fileUpload({
-    limits: { fileSize: MAX_FILE_SIZE },
+    limits: {
+        fileSize: MAX_FILE_SIZE
+    },
     abortOnLimit: true,
     limitHandler: (req, res, next) => {
         res.status(413).send('File too large for upload');
@@ -24,23 +26,23 @@ app.get('/', (req, res) => {
 })
 
 app.post('/upload', function(req, res) {
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
 
-  let file = req.files.file;
+    let file = req.files.file;
 
-  if(!file || file.mimetype != ACCEPTED_FILE_MIME_TYPE) {
-    return res.status(400).send(`Invalid file type. ${ACCEPTED_FILE_MIME_TYPE} files only.`);
-  }
+    if (!file || file.mimetype != ACCEPTED_FILE_MIME_TYPE) {
+        return res.status(400).send(`Invalid file type. ${ACCEPTED_FILE_MIME_TYPE} files only.`);
+    }
 
-  //DO STUFF WITH FILE
-  //SEND RESPONSE WITH DEOBF FILE
+    //DO STUFF WITH FILE
+    //SEND RESPONSE WITH DEOBF FILE
     res.download('./example.txt', 'example.txt', (err) => {
         if (err) {
-        console.error(err);
-        res.sendStatus(500);
-        return
+            console.error(err);
+            res.sendStatus(500);
+            return
         }
     })
 

@@ -16,8 +16,7 @@ app.use(fileUpload({
         res.status(413).send('File too large for upload');
         next(res);
         return;
-    },
-    useTempFiles: true
+    }
 }));
 
 app.get('/', (req, res) => {
@@ -37,9 +36,15 @@ app.post('/upload', function(req, res) {
 
   //DO STUFF WITH FILE
   //SEND RESPONSE WITH DEOBF FILE
-  res.redirect('/');
+    res.download('./example.txt', 'example.txt', (err) => {
+        if (err) {
+        console.error(err);
+        res.sendStatus(500);
+        return
+        }
+    })
 
-});
+})
 
 app.use((req, res, next) => {
     res.redirect('/');

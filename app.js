@@ -32,7 +32,7 @@ app.post('/upload', function(req, res) {
   let file = req.files.file;
 
   if(!file || file.mimetype != ACCEPTED_FILE_MIME_TYPE) {
-    return res.status(400).send('Invalid file type. Javascript files only.');
+    return res.status(400).send(`Invalid file type. ${ACCEPTED_FILE_MIME_TYPE} files only.`);
   }
 
   //DO STUFF WITH FILE
